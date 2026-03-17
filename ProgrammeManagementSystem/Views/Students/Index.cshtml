@@ -1,0 +1,43 @@
+﻿@model IEnumerable<ProgrammeManagementSystem.Models.Student>
+@{
+    ViewData["Title"] = "Students";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>👩‍🎓 Students</h2>
+    <a asp-action="Create" class="btn btn-primary">+ Add Student</a>
+</div>
+
+<table class="table table-striped table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Year</th>
+            <th>Modules</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var s in Model)
+        {
+            <tr>
+                <td>@s.FirstName @s.LastName</td>
+                <td>@s.Email</td>
+                <td>@(s.PhoneNumber ?? "—")</td>
+                <td>Year @s.YearOfStudy</td>
+                <td><span class="badge bg-info">@s.Registrations.Count</span></td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@s.StudentID" class="btn btn-sm btn-outline-info">Details</a>
+                    <a asp-action="Edit" asp-route-id="@s.StudentID" class="btn btn-sm btn-outline-warning">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@s.StudentID" class="btn btn-sm btn-outline-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@if (!Model.Any())
+{
+    <div class="alert alert-info">No students found. <a asp-action="Create">Add the first one.</a></div>
+}
